@@ -1,27 +1,28 @@
 import pygame
 import time
 
-
-
+#variables declaration
 BLACK =     (0, 0, 0)
 WHITE = (255,255,255)
 c_count = 0 
 current_no =10
-
 prev_pos = (0,0)
+click_path = []
+
+#initiation
 pygame.init()
 
+#window setup
 pygame.display.set_caption('Rugby Moves')
 window = pygame.display.set_mode((800, 600))
-
 background = pygame.Surface((800, 600))
 background.fill(pygame.Color('#00ff00'))
+window.blit(background, (0, 0))
 
-
+#font
 font = pygame.font.Font('freesansbold.ttf', 32)
 
 #function section
-click_path = []
 
 def getCo(click_position):
     global click_path
@@ -40,34 +41,35 @@ def draw_arrow():
     pygame.draw.line(window, (255, 0, 0), prev_pos, pos)
     return 0 
 
-is_running = True
-window.blit(background, (0, 0))
-while is_running:
 
+#main loop 
+is_running = True
+while is_running:
+    
+    #inputs
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
         
+        #keys pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
                 print("yesss")
                 c_count = 0
                 current_no +=1
 
-    
- 
+    #mouse pressed
     if event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
-        getCo(pos)
-        draw_point(pos, current_no)
-        if c_count >= 1:
-            draw_arrow()
+        getCo(pos)   #taking mouse co-ordinates and saving them
+        draw_point(pos, current_no)  #circle drawing and number render
+        if c_count >= 1:  #checks if it is the first point (no arrow)
+            draw_arrow()  #connects previous and current point
         prev_pos = pos
         c_count +=1
         time.sleep(1)
 
 
-    #window.blit(background, (0, 0))
-    pygame.display.update()
+    pygame.display.update() #update the window
 
 
