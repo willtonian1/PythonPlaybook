@@ -32,9 +32,7 @@ def getCo(click_position):
 		global font
 		click_path.append(str(click_position))
 	
-		book = open("playbook.txt", 'a')
-		book.write(str(click_position) + ',')
-		book.close()
+		
 		return print("clickpath: " + str(click_path))
 
 
@@ -52,8 +50,12 @@ def draw_arrow():
 	return 0 
 
 
-
-
+def save_clickpath():
+	play_name = str(input('Play Name: '))
+	book = open('user_plays/'+ play_name + '.txt', 'a')
+	book.writelines(str(click_path))
+	book.close()
+	return 0 
 #main loop 
 	
 is_running = True
@@ -70,7 +72,14 @@ while is_running:
 				print("yesss")
 				c_count = 0
 				current_no +=1
-	
+
+		
+			if event.key == pygame.K_s:
+				print('save')
+				save_clickpath()
+				click_path = []	
+				prev_pos = pos
+				c_count +=1
 	#mouse pressed
 	if event.type == pygame.MOUSEBUTTONUP:
 		pos = pygame.mouse.get_pos()
