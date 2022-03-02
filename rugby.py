@@ -52,9 +52,10 @@ def draw_arrow():
 
 def save_clickpath():
 	play_name = str(input('Play Name: '))
-	book = open('user_plays/'+ play_name + '.txt', 'a')
+	book = open('user_plays/' + play_name + '.txt', 'a')
 	book.writelines(str(click_path))
 	book.close()
+	window.blit(background, (0, 0))
 	return 0 
 #main loop 
 	
@@ -79,7 +80,7 @@ while is_running:
 				save_clickpath()
 				click_path = []	
 				prev_pos = pos
-				c_count +=1
+				c_count = 0 
 	#mouse pressed
 	if event.type == pygame.MOUSEBUTTONUP:
 		pos = pygame.mouse.get_pos()
