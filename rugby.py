@@ -65,15 +65,12 @@ def open_move():
 	open_input = str(input('move: '))
 	book = open('user_plays/'+ open_input +'.txt', 'r')
 	move = ast.literal_eval(book.read())
-	print(move)
-	for tuple in move:
-		print(tuple)
 
+
+	#adapting the string and creating a point for circles and the lines too. 
 	count = 0 
 	for each_circle in range(len(move)):
 		
-		print(move[each_circle])
-		 
 		string = move[each_circle]
 		string = string.replace('(', '')
 		string = string.replace(')', '')
@@ -83,10 +80,10 @@ def open_move():
 		pygame.draw.circle(window, BLACK, point, 20)
 
 
-
+		#lines drawn
 		if count >=1:
 			pygame.draw.line(window, (255, 0, 0), prev_point, point)
-
+																																													
 
 		count +=1
 		prev_point = point
