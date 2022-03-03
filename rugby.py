@@ -1,6 +1,7 @@
+from re import T
 import pygame
 import time
-
+import ast
 
 #variables declaration
 BLACK =     (0, 0, 0)
@@ -9,7 +10,6 @@ c_count = 0
 current_no =10
 prev_pos = (0,0)
 click_path = []
-
 
 
 #initiation
@@ -57,6 +57,29 @@ def save_clickpath():
 	book.close()
 	window.blit(background, (0, 0))
 	return 0 
+
+
+
+def open_move(): 
+	#open a file and read the array.
+	open_input = str(input('move: '))
+	book = open('user_plays/'+ open_input +'.txt', 'r')
+	move = ast.literal_eval(book.read())
+	print(move)
+	for tuple in move:
+		print(tuple)
+
+	
+	for each_circle in range(len(move)):
+		print(move[each_circle])
+		 
+		string = move[each_circle]
+		string = string.replace('(', '')
+		string = string.replace(')', '')
+		string = string.split(',')
+		print(string)	
+		pygame.draw.circle(window, BLACK, (int(string[0]),int(string[1])), 20)
+	return 0
 #main loop 
 	
 is_running = True
@@ -74,13 +97,29 @@ while is_running:
 				c_count = 0
 				current_no +=1
 
-		
+			#saving a move
 			if event.key == pygame.K_s:
 				print('save')
 				save_clickpath()
 				click_path = []	
 				prev_pos = pos
 				c_count = 0 
+
+
+			#bringing up old moves
+			if event.key == pygame.K_o:
+				print('open')
+				open_move()
+				click_path = []	
+				c_count = 0 
+
+			#blank
+			if event.key == pygame.K_b:
+				print('blank')
+				window.blit(background, (0,0))
+				click_path = []	
+				c_count = 0 
+
 	#mouse pressed
 	if event.type == pygame.MOUSEBUTTONUP:
 		pos = pygame.mouse.get_pos()
@@ -88,7 +127,7 @@ while is_running:
 		draw_point(pos, current_no)  #circle drawing and number render
 		if c_count >= 1:  #checks if it is the first point (no arrow)
 			draw_arrow()  #connects previous and current point
-	
+
 					
 		prev_pos = pos
 		c_count +=1
