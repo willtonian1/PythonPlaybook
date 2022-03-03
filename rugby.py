@@ -69,8 +69,9 @@ def open_move():
 	for tuple in move:
 		print(tuple)
 
-	
+	count = 0 
 	for each_circle in range(len(move)):
+		
 		print(move[each_circle])
 		 
 		string = move[each_circle]
@@ -78,7 +79,17 @@ def open_move():
 		string = string.replace(')', '')
 		string = string.split(',')
 		print(string)	
-		pygame.draw.circle(window, BLACK, (int(string[0]),int(string[1])), 20)
+		point = (int(string[0]),int(string[1]))
+		pygame.draw.circle(window, BLACK, point, 20)
+
+
+
+		if count >=1:
+			pygame.draw.line(window, (255, 0, 0), prev_point, point)
+
+
+		count +=1
+		prev_point = point
 	return 0
 #main loop 
 	
