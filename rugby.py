@@ -61,6 +61,8 @@ def save_clickpath():
 
 
 def open_move(): 
+
+	current_player_no = 10
 	#open a file and read the array.
 	open_input = str(input('move: '))
 	book = open('user_plays/'+ open_input +'.txt', 'r')
@@ -69,15 +71,25 @@ def open_move():
 
 	#adapting the string and creating a point for circles and the lines too. 
 	count = 0 
+
 	for each_circle in range(len(move)):
-		
-		string = move[each_circle]
-		string = string.replace('(', '')
-		string = string.replace(')', '')
-		string = string.split(',')
-		print(string)	
-		point = (int(string[0]),int(string[1]))
-		pygame.draw.circle(window, BLACK, point, 20)
+		if isinstance(move[each_circle], int) == False: #checking if the item in the list is a point, or a change in player_no
+			string = move[each_circle]
+			string = string.replace('(', '')
+			string = string.replace(')', '')
+			string = string.split(',')
+			print(string)	
+			point = (int(string[0]),int(string[1]))
+			pygame.draw.circle(window, BLACK, point, 20)
+
+			#nnumber drawing
+			txt = font.render(str(current_player_no), False, WHITE)
+			window.blit(txt, point)
+
+		else:   #means no line will be drawn
+			print(str(move[each_circle]))
+			count = -1 #means the lines of different players will not be connected!
+			current_player_no = move[each_circle]
 
 
 		#lines drawn
@@ -102,6 +114,7 @@ while is_running:
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_r:
 				print("yesss")
+				click_path.append(current_no +1)
 				c_count = 0
 				current_no +=1
 
