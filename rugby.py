@@ -27,6 +27,12 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 
 #function section
 
+def draw_menu():
+    pygame.draw.rect(window, (255,0,0), pygame.Rect(30, 30, 100, 60))
+    txt = font.render("Home", False, WHITE)
+    window.blit(txt, (30,30))
+
+
 def getCo(click_position):
 		global click_path
 		global font
@@ -101,7 +107,7 @@ def open_move():
 		prev_point = point
 	return 0
 #main loop 
-	
+draw_menu()
 is_running = True
 while is_running:
 		
@@ -138,8 +144,15 @@ while is_running:
 			if event.key == pygame.K_b:
 				print('blank')
 				window.blit(background, (0,0))
+				draw_menu()
 				click_path = []	
-				c_count = 0 
+				c_count = 0
+
+	#menu inputs!!!
+				
+	#if event.type == pygame.MOUSEBUTTONUP and pos != the same pos as the button:
+            #pos = pygame.mouse.get_pos()
+            
 
 	#mouse pressed
 	if event.type == pygame.MOUSEBUTTONUP:
@@ -156,3 +169,4 @@ while is_running:
 	
 	
 	pygame.display.update() #update the window
+
