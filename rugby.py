@@ -137,7 +137,9 @@ while game:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				is_running = False
-
+				pygame.quit()
+				sys.exit()
+				
 			# keys pressed
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_r:
