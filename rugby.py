@@ -2,7 +2,7 @@ from re import T
 import pygame
 import time
 import ast
-import sys 
+import sys
 # variables declaration
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -23,9 +23,10 @@ background.fill(pygame.Color('#00ff00'))
 window.blit(background, (0, 0))
 # font
 font = pygame.font.Font('freesansbold.ttf', 32)
-
+pygame.display.update()
 
 # function section
+
 
 def draw_menu():
     pygame.draw.rect(window, (255, 0, 0), pygame.Rect(250, 200, 300, 100))
@@ -36,6 +37,7 @@ def draw_menu():
     pygame.draw.rect(window, (0, 0, 0), pygame.Rect(300, 350, 200, 70))
     txt = font.render("Draw", False, WHITE)
     window.blit(txt, (350, 375))
+    pygame.display.update()
 
 
 def getCo(click_position):
@@ -110,86 +112,87 @@ def open_move():
     return 0
 
 
-
 game = True
+window.blit(background, (0, 0))
 draw_menu()
 while game:
-	#main loop
-	position_for_press = str(pygame.mouse.get_pos())
-	position_for_press = position_for_press.replace('(', '')
-	position_for_press = position_for_press.replace(')', '')
-	position_for_press = position_for_press.split(',')
+    # main loop
+    position_for_press = str(pygame.mouse.get_pos())
+    position_for_press = position_for_press.replace('(', '')
+    position_for_press = position_for_press.replace(')', '')
+    position_for_press = position_for_press.split(',')
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			game = False
-			pygame.quit()
-			sys.exit()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game = False
+            pygame.quit()
+            sys.exit()
 
-	if (event.type == pygame.MOUSEBUTTONUP) and (300 < int(position_for_press[0]) < 500) and (350 < int(position_for_press[1]) < 420):
-		is_running = True
-	else:
-		is_running = False
+    if (event.type == pygame.MOUSEBUTTONUP) and (300 < int(position_for_press[0]) < 500) and (350 < int(position_for_press[1]) < 420):
+        is_running = True
+        window.blit(background, (0, 0))
+        time.sleep(0.4)
+    else:
+        is_running = False
 
-	while is_running:
+    while is_running:
 
-		# inputs
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				is_running = False
-				pygame.quit()
-				sys.exit()
-				
-			# keys pressed
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_r:
-					print("yesss")
-					click_path.append(current_no + 1)
-					c_count = 0
-					current_no += 1
+        # inputs
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                is_running = False
+                pygame.quit()
+                sys.exit()
 
-				# saving a move
-				if event.key == pygame.K_s:
-					print('save')
-					save_clickpath()
-					click_path = []
-					prev_pos = pos
-					c_count = 0
+            # keys pressed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    print("yesss")
+                    click_path.append(current_no + 1)
+                    c_count = 0
+                    current_no += 1
 
-				# bringing up old moves
-				if event.key == pygame.K_o:
-					print('open')
-					open_move()
-					click_path = []
-					c_count = 0
+                # saving a move
+                if event.key == pygame.K_s:
+                    print('save')
+                    save_clickpath()
+                    click_path = []
+                    prev_pos = pos
+                    c_count = 0
 
-				# blank
-				if event.key == pygame.K_b:
-					print('blank')
-					window.blit(background, (0, 0))
-					draw_menu()
-					click_path = []
-					c_count = 0
+                # bringing up old moves
+                if event.key == pygame.K_o:
+                    print('open')
+                    open_move()
+                    click_path = []
+                    c_count = 0
 
-		# menu inputs!!!
-		position_for_press = str(pygame.mouse.get_pos())
-		position_for_press = position_for_press.replace('(', '')
-		position_for_press = position_for_press.replace(')', '')
-		position_for_press = position_for_press.split(',')
-		if (event.type == pygame.MOUSEBUTTONUP) and (30 < int(position_for_press[0]) < 90) and (30 < int(position_for_press[1]) < 130):
-			window.blit(background, (0, 0))
-			print('hello')
+                # blank
+                if event.key == pygame.K_b:
+                    print('blank')
+                    window.blit(background, (0, 0))
+                    click_path = []
+                    c_count = 0
 
-		# mouse pressed
-		if event.type == pygame.MOUSEBUTTONUP:
-			pos = pygame.mouse.get_pos()
-			getCo(pos)  # taking mouse co-ordinates and saving them
-			draw_point(pos, current_no)  # circle drawing and number render
-			if c_count >= 1:  # checks if it is the first point (no arrow)
-				draw_arrow()  # connects previous and current point
+        # menu inputs!!!
+        position_for_press = str(pygame.mouse.get_pos())
+        position_for_press = position_for_press.replace('(', '')
+        position_for_press = position_for_press.replace(')', '')
+        position_for_press = position_for_press.split(',')
+        if (event.type == pygame.MOUSEBUTTONUP) and (30 < int(position_for_press[0]) < 90) and (30 < int(position_for_press[1]) < 130):
+            window.blit(background, (0, 0))
+            print('hello')
 
-			prev_pos = pos
-			c_count += 1
-			time.sleep(1)
+        # mouse pressed
+        if event.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()
+            getCo(pos)  # taking mouse co-ordinates and saving them
+            draw_point(pos, current_no)  # circle drawing and number render
+            if c_count >= 1:  # checks if it is the first point (no arrow)
+                draw_arrow()  # connects previous and current point
 
-		pygame.display.update()  # update the window
+            prev_pos = pos
+            c_count += 1
+            time.sleep(1)
+
+        pygame.display.update()  # update the window
