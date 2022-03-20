@@ -162,6 +162,7 @@ while game:
 
                 # bringing up old moves
                 if event.key == pygame.K_o:
+                    window.blit(background, (0, 0))
                     print('open')
                     open_move()
                     click_path = []
@@ -182,9 +183,15 @@ while game:
         if (event.type == pygame.MOUSEBUTTONUP) and (30 < int(position_for_press[0]) < 90) and (30 < int(position_for_press[1]) < 130):
             window.blit(background, (0, 0))
             print('hello')
+            click_path = []
+            c_count = 0
+
+            is_running = False
+            draw_menu()
 
         # mouse pressed
-        if event.type == pygame.MOUSEBUTTONUP:
+        elif event.type == pygame.MOUSEBUTTONUP:
+            print('hi')
             pos = pygame.mouse.get_pos()
             getCo(pos)  # taking mouse co-ordinates and saving them
             draw_point(pos, current_no)  # circle drawing and number render
