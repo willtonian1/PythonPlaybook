@@ -10,7 +10,7 @@ c_count = 0
 current_no = 10
 prev_pos = (0, 0)
 click_path = []
-
+open_input = "Unnamed"
 
 # initiation
 pygame.init()
@@ -26,6 +26,22 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.update()
 
 # function section
+def in_draw_menu():
+    pygame.draw.rect(window, (0, 0, 0), pygame.Rect(30, 30, 100, 60))
+    txt = font.render("back", False, WHITE)
+    window.blit(txt, (30, 30))
+
+    pygame.draw.rect(window, (255, 0, 0), pygame.Rect(670, 30, 100, 60))
+    txt = font.render("Draw", False, WHITE)
+    window.blit(txt, (670, 30))
+
+
+    pygame.draw.rect(window, (255, 0, 0), pygame.Rect(300, 30, 200, 60))
+    txt = font.render(str(open_input), False, WHITE)
+    window.blit(txt, (300, 30))
+
+
+
 
 
 def draw_menu():
@@ -73,12 +89,13 @@ def save_clickpath():
 
 
 def open_move():
-
+    global open_input
     current_player_no = 10
     # open a file and read the array.
     open_input = str(input('move: '))
     book = open('user_plays/' + open_input + '.txt', 'r')
     move = ast.literal_eval(book.read())
+    
 
     # adapting the string and creating a point for circles and the lines too.
     count = 0
@@ -129,13 +146,15 @@ while game:
             sys.exit()
 
     if (event.type == pygame.MOUSEBUTTONUP) and (300 < int(position_for_press[0]) < 500) and (350 < int(position_for_press[1]) < 420):
-        is_running = True
+        draw_is_running = True
         window.blit(background, (0, 0))
-        time.sleep(0.4)
+        time.sleep(0.3)
+        in_draw_menu()
     else:
-        is_running = False
+        draw_is_running = False
 
-    while is_running:
+    while draw_is_running:
+        in_draw_menu()
 
         # inputs
         for event in pygame.event.get():
@@ -159,6 +178,7 @@ while game:
                     click_path = []
                     prev_pos = pos
                     c_count = 0
+                    in_draw_menu()
 
                 # bringing up old moves
                 if event.key == pygame.K_o:
@@ -167,6 +187,7 @@ while game:
                     open_move()
                     click_path = []
                     c_count = 0
+                    in_draw_menu()
 
                 # blank
                 if event.key == pygame.K_b:
@@ -174,19 +195,20 @@ while game:
                     window.blit(background, (0, 0))
                     click_path = []
                     c_count = 0
+                    in_draw_menu()
 
         # menu inputs!!!
         position_for_press = str(pygame.mouse.get_pos())
         position_for_press = position_for_press.replace('(', '')
         position_for_press = position_for_press.replace(')', '')
         position_for_press = position_for_press.split(',')
-        if (event.type == pygame.MOUSEBUTTONUP) and (30 < int(position_for_press[0]) < 90) and (30 < int(position_for_press[1]) < 130):
+        if (event.type == pygame.MOUSEBUTTONUP) and (30 < int(position_for_press[0]) < 130) and (30 < int(position_for_press[1]) < 90):
             window.blit(background, (0, 0))
             print('hello')
             click_path = []
             c_count = 0
 
-            is_running = False
+            draw_is_running = False
             draw_menu()
 
         # mouse pressed
@@ -202,4 +224,8 @@ while game:
             c_count += 1
             time.sleep(1)
 
+    
+
+        
+        
         pygame.display.update()  # update the window
