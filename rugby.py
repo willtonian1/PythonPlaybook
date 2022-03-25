@@ -27,6 +27,43 @@ pygame.display.update()
 
 # function section
 
+def animate(playarray):
+    print(playarray)
+    window.blit(background, (0,0))
+    in_draw_menu()
+    
+    index = 0
+    for item in playarray:
+        if item == 11:
+            playarray11 = playarray[index:]
+            playarray10 = playarray[:index]
+            index +=1
+        else:
+            index +=1
+    print(playarray10)
+    print(playarray11)
+    playarray11.remove(11)
+    
+    #animation now for no10
+    finished = False
+    iteration = 0
+    while finished == False:
+        
+        string = playarray10[iteration]
+        string = string.replace('(', '')
+        string = string.replace(')', '')
+        string = string.split(',')
+        print(string)
+
+
+        pygame.draw.circle(window, BLACK, (int(string[0]),int(string[1])), 20)
+        time.sleep(10)
+        pygame.display.update()
+
+        iteration +=1
+        if iteration == len(playarray10):
+            finished = True
+
 
 
 def in_draw_menu():
@@ -145,10 +182,11 @@ def open_move():
         window.blit(text_surface, (300,200))
         
         pygame.display.update()
-
+    global move
     book = open('user_plays/' + open_input + '.txt', 'r')
     move = ast.literal_eval(book.read())
     window.blit(background, (0, 0))
+    book.close()
 
     # adapting the string and creating a point for circles and the lines too.
     count = 0
@@ -201,7 +239,7 @@ while game:
     if (event.type == pygame.MOUSEBUTTONUP) and (300 < int(position_for_press[0]) < 500) and (350 < int(position_for_press[1]) < 420):
         draw_is_running = True
         window.blit(background, (0, 0))
-        time.sleep(0.3)
+        time.sleep(0.5)
         in_draw_menu()
     else:
         draw_is_running = False
@@ -254,8 +292,8 @@ while game:
                     c_count = 0
                     in_draw_menu()
 
-
-
+                if event.key ==pygame.K_a:
+                    animate(move)
         # menu inputs!!!
         position_for_press = str(pygame.mouse.get_pos())
         position_for_press = position_for_press.replace('(', '')
