@@ -26,9 +26,23 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.update()
 
 # function section
+def generate_string_points(player_array, iteration):
+    string = player_array[iteration]
+    string = string.replace('(', '')
+    string = string.replace(')', '')
+    string = string.split(',')
+    print(string)
+    return string 
+
+def generate_string_points2(player_array, iteration):
+    string = player_array[iteration+1]
+    string = string.replace('(', '')
+    string = string.replace(')', '')
+    string = string.split(',')
+    print(string)
+    return string 
 
 def animate(playarray):
-    print(playarray)
     window.blit(background, (0,0))
     in_draw_menu()
     
@@ -41,27 +55,35 @@ def animate(playarray):
         else:
             index +=1
     print(playarray10)
-    print(playarray11)
     playarray11.remove(11)
+    print(playarray11)
+   
     
     #animation now for no10
     finished = False
     iteration = 0
     while finished == False:
-        
-        string = playarray10[iteration]
-        string = string.replace('(', '')
-        string = string.replace(')', '')
-        string = string.split(',')
-        print(string)
 
+        
+
+        string = generate_string_points(playarray10, iteration)
+        string2 = generate_string_points2(playarray10, iteration)
 
         pygame.draw.circle(window, BLACK, (int(string[0]),int(string[1])), 20)
-        time.sleep(10)
+        time.sleep(1)
         pygame.display.update()
 
+        step_x = (int(string2[0]) - int(string[0])) / 5
+        step_y = (int(string2[1])- int(string[1])) / 5
+
+        for i in range(5):
+            pygame.draw.circle(window, BLACK, ((int(string[0]) + (i *step_x)),(int(string[1]))+ (i * step_y)), 20)
+
+            pygame.display.update()
+            time.sleep(0.2)
+
         iteration +=1
-        if iteration == len(playarray10):
+        if iteration == len(playarray10) -1:
             finished = True
 
 
