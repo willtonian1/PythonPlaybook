@@ -148,7 +148,7 @@ def open_move():
 
     book = open('user_plays/' + open_input + '.txt', 'r')
     move = ast.literal_eval(book.read())
-    
+    window.blit(background, (0, 0))
 
     # adapting the string and creating a point for circles and the lines too.
     count = 0
@@ -239,7 +239,7 @@ while game:
 
                 # bringing up old moves
                 if event.key == pygame.K_o:
-                    window.blit(background, (0, 0))
+                    
                     print('open')
                     open_move()
                     click_path = []
