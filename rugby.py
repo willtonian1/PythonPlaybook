@@ -26,6 +26,9 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.update()
 
 # function section
+
+
+
 def in_draw_menu():
     pygame.draw.rect(window, (0, 0, 0), pygame.Rect(30, 30, 100, 60))
     txt = font.render("back", False, WHITE)
@@ -39,9 +42,6 @@ def in_draw_menu():
     pygame.draw.rect(window, (255, 0, 0), pygame.Rect(300, 30, 200, 60))
     txt = font.render(str(open_input), False, WHITE)
     window.blit(txt, (300, 30))
-
-
-
 
 
 def draw_menu():
@@ -80,8 +80,36 @@ def draw_arrow():
 
 
 def save_clickpath():
-    play_name = str(input('Play Name: '))
-    book = open('user_plays/' + play_name + '.txt', 'a')
+    user_text = ''
+    #play_name = str(input('Play Name: '))
+    #loop for typing input
+    entered = False
+    while entered == False: #loop for entering title of the move
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+  
+                 # Check for backspace
+                if event.key == pygame.K_RETURN:
+                    entered = True
+                    play_name = user_text
+                if event.key == pygame.K_BACKSPACE:
+  
+                    # get text input from 0 to -1 i.e. end.
+                    user_text = user_text[:-1]
+  
+            # Unicode standard is used for string
+            # formation
+                else:
+                    user_text += event.unicode
+
+        pygame.draw.rect(window, (255,0,0), pygame.Rect(300,200,200,36))
+        text_surface = font.render(user_text, True, (255, 255, 255))
+        window.blit(text_surface, (300,200))
+        
+        pygame.display.update()
+
+
+    book = open('user_plays/' + play_name + '.txt', 'w+')
     book.writelines(str(click_path))
     book.close()
     window.blit(background, (0, 0))
@@ -92,7 +120,32 @@ def open_move():
     global open_input
     current_player_no = 10
     # open a file and read the array.
-    open_input = str(input('move: '))
+    user_text = ''
+    entered = False
+    while entered == False: #loop for entering title of the move
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+  
+                 # Check for backspace
+                if event.key == pygame.K_RETURN:
+                    entered = True
+                    open_input = user_text
+                if event.key == pygame.K_BACKSPACE:
+  
+                    # get text input from 0 to -1 i.e. end.
+                    user_text = user_text[:-1]
+  
+            # Unicode standard is used for string
+            # formation
+                else:
+                    user_text += event.unicode
+
+        pygame.draw.rect(window, (255,0,0), pygame.Rect(300,200,200,36))
+        text_surface = font.render(user_text, True, (255, 255, 255))
+        window.blit(text_surface, (300,200))
+        
+        pygame.display.update()
+
     book = open('user_plays/' + open_input + '.txt', 'r')
     move = ast.literal_eval(book.read())
     
@@ -175,6 +228,10 @@ while game:
                 if event.key == pygame.K_s:
                     print('save')
                     save_clickpath()
+                    
+
+                    
+
                     click_path = []
                     prev_pos = pos
                     c_count = 0
@@ -196,6 +253,8 @@ while game:
                     click_path = []
                     c_count = 0
                     in_draw_menu()
+
+
 
         # menu inputs!!!
         position_for_press = str(pygame.mouse.get_pos())
