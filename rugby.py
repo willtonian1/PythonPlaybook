@@ -57,6 +57,11 @@ def animate(playarray):
     print(playarray10)
     playarray11.remove(11)
     print(playarray11)
+
+    movearray = []
+    movearray.append(playarray10)
+    movearray.append(playarray11)
+    print('Move array: ' + str(movearray))
    
     
     #animation now for no10
@@ -65,26 +70,30 @@ def animate(playarray):
     while finished == False:
 
         
+        for item in movearray:
+            
+            
+            string = generate_string_points(item, iteration)
+            string2 = generate_string_points2(item, iteration)
 
-        string = generate_string_points(playarray10, iteration)
-        string2 = generate_string_points2(playarray10, iteration)
 
-        pygame.draw.circle(window, BLACK, (int(string[0]),int(string[1])), 20)
-        time.sleep(1)
-        pygame.display.update()
 
-        step_x = (int(string2[0]) - int(string[0])) / 5
-        step_y = (int(string2[1])- int(string[1])) / 5
-
-        for i in range(5):
-            pygame.draw.circle(window, BLACK, ((int(string[0]) + (i *step_x)),(int(string[1]))+ (i * step_y)), 20)
-
+            pygame.draw.circle(window, BLACK, (int(string[0]),int(string[1])), 20)
+            time.sleep(1)
             pygame.display.update()
-            time.sleep(0.2)
 
-        iteration +=1
-        if iteration == len(playarray10) -1:
-            finished = True
+            step_x = (int(string2[0]) - int(string[0])) / 5
+            step_y = (int(string2[1])- int(string[1])) / 5
+
+            for i in range(5):
+                pygame.draw.circle(window, BLACK, ((int(string[0]) + (i *step_x)),(int(string[1]))+ (i * step_y)), 20)
+
+                pygame.display.update()
+                time.sleep(0.2)
+
+            iteration +=1
+            if iteration == len(playarray10) -1:
+                finished = True
 
 
 
