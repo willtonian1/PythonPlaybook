@@ -213,7 +213,7 @@ def save_clickpath():
         pygame.display.update()
 
 
-    book = open('user_plays/' + play_name + '.txt', 'w+')
+    book = open('user_plays/' + str(play_name) + '.txt', 'w+')
     book.writelines(str(click_path))
     book.close()
     window.blit(background, (0, 0))
