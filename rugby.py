@@ -49,6 +49,7 @@ def animate(playarray):
     in_draw_menu()
     
     index = 0
+
     for item in playarray:
         if item == 11:
             
@@ -126,12 +127,7 @@ def animate(playarray):
         print('Iteration; ' + str(iteration))
         if iteration == len(item) -1:
             finished = True
-        
-        
-    
-            
-
-
+           
 
 def in_draw_menu():
     pygame.draw.rect(window, (0, 0, 0), pygame.Rect(30, 30, 100, 60))
@@ -359,8 +355,12 @@ while game:
                     c_count = 0
                     in_draw_menu()
 
+                #animate
                 if event.key ==pygame.K_a:
                     animate(move)
+
+
+
         # menu inputs!!!
         position_for_press = str(pygame.mouse.get_pos())
         position_for_press = position_for_press.replace('(', '')
