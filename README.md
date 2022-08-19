@@ -1,5 +1,8 @@
 # PythonPlaybook
 A Python Pygame Project which will allow coaches to draw plays (focused on rugby back's moves) and then present them visually for players to easily understand in a digital/animated format.
+
+Current Status: paused and ongoing, to be finished later
+
 PLAN:
 -animate the plays
 --> within animation -i have points for each player
