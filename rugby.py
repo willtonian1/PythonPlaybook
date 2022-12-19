@@ -7,6 +7,9 @@ import pygame
 import time
 import ast
 import sys
+import modules.animate as animation
+import modules.in_draw_menu as menus
+
 # variables declaration
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -47,105 +50,9 @@ def generate_string_points2(player_array, iteration):
     string = string.split(',')
     print(string)
     return string 
-
-def animate(playarray):
-    window.blit(background, (0,0))
-    in_draw_menu()
-    
-    index = 0
-
-    for item in playarray:
-        if item == 11:
-            
-            playarray11 = playarray[index: playarray.index(12)]
-            playarray11.remove(11)
-            playarray10 = playarray[:index]
-            index +=1
-        elif item == 12:
-            
-            playarray12 = playarray[index:playarray.index(13)]
-            playarray12.remove(12)
-            index +=1 
-        elif item == 13: 
-            
-            playarray13 = playarray[index: playarray.index(14)]
-            playarray13.remove(13)
-        elif item == 14: 
-            
-            playarray14 = playarray[index: playarray.index(15)]
-            playarray14.remove(14)
-        elif item == 15:
-            
-            playarray15 = playarray[index:]
-            playarray15.remove(15)
-        else:
-
-            index +=1
-    print(playarray10)
-    
-    print(playarray11)
-
-    movearray = []
-    movearray.append(playarray10)
-    movearray.append(playarray11)
-    movearray.append(playarray12)
-    movearray.append(playarray13)
-    movearray.append(playarray14)
-    movearray.append(playarray15)
-
-    print('Move array: ' + str(movearray))
-   
-    
-    #animation now for no10
-  
-    finished = False
-    iteration = 0
-    while finished == False: 
-        foriterations = 1
-        for item in movearray:
-            
-            point1 = generate_string_points(item, iteration)
-            point2 = generate_string_points2(item, iteration)
-            print('p1: ' + str(point1))
-            print('p2: ' + str(point2))
+      
 
 
-        
-
-            pygame.draw.circle(window, BLACK, (int(point1[0]),int(point1[1])), 20)
-            
-            
-            step_x = (int(point2[0]) - int(point1[0])) / 5
-            step_y = (int(point2[1])- int(point1[1])) / 5
-
-            for i in range(5):
-                print('a')
-                pygame.draw.circle(window, BLACK, ((int(point1[0]) + (i *step_x)),(int(point1[1]))+ (i * step_y)), 20)
-                
-            
-
-
-        time.sleep(1)
-        pygame.display.update()
-        iteration +=1
-        print('Iteration; ' + str(iteration))
-        if iteration == len(item) -1:
-            finished = True
-           
-
-def in_draw_menu():
-    pygame.draw.rect(window, (0, 0, 0), pygame.Rect(30, 30, 100, 60))
-    txt = font.render("back", False, WHITE)
-    window.blit(txt, (30, 30))
-
-    pygame.draw.rect(window, (255, 0, 0), pygame.Rect(670, 30, 100, 60))
-    txt = font.render("Draw", False, WHITE)
-    window.blit(txt, (670, 30))
-
-
-    pygame.draw.rect(window, (255, 0, 0), pygame.Rect(300, 30, 200, 60))
-    txt = font.render(str(open_input), False, WHITE)
-    window.blit(txt, (300, 30))
 
 
 def draw_menu():
@@ -249,6 +156,7 @@ def open_move():
         window.blit(text_surface, (300,200))
         
         pygame.display.update()
+
     global move
     book = open('user_plays/' + open_input + '.txt', 'r')
     move = ast.literal_eval(book.read())
@@ -307,12 +215,12 @@ while game:
         draw_is_running = True
         window.blit(background, (0, 0))
         time.sleep(0.5)
-        in_draw_menu()
+        menus.in_draw_menu(window, open_input, WHITE, font)
     else:
         draw_is_running = False
 
     while draw_is_running:
-        in_draw_menu()
+        menus.in_draw_menu(window, open_input, WHITE, font)
 
         # inputs
         for event in pygame.event.get():
@@ -340,7 +248,7 @@ while game:
                     click_path = []
                     prev_pos = pos
                     c_count = 0
-                    in_draw_menu()
+                    menus.in_draw_menu(window, open_input, WHITE, font)
 
                 # bringing up old moves
                 if event.key == pygame.K_o:
@@ -349,7 +257,9 @@ while game:
                     open_move()
                     click_path = []
                     c_count = 0
-                    in_draw_menu()
+                    print("Open input: " + str(open_input))
+
+                    menus.in_draw_menu(window, open_input, WHITE, font)
 
                 # blank
                 if event.key == pygame.K_b:
@@ -357,11 +267,11 @@ while game:
                     window.blit(background, (0, 0))
                     click_path = []
                     c_count = 0
-                    in_draw_menu()
+                    menus.in_draw_menu(window, open_input, WHITE, font)
 
                 #animate
                 if event.key ==pygame.K_a:
-                    animate(move)
+                    animation.animate(window, background, move, open_input, WHITE, font)
 
 
 
@@ -390,7 +300,7 @@ while game:
 
             prev_pos = pos
             c_count += 1
-            time.sleep(1)
+            time.sleep(0.5)
 
     
 
