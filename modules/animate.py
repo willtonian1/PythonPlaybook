@@ -45,6 +45,13 @@ def animate(window, background, playarray, open_input, WHITE, font):
     print("11: " + str(playarray11))
 
 
+    P10 = Point("10", playarray10)
+    P11 = Point("11", playarray11)
+
+    print(P10._points_list)
+
+
+
 
 #Class
 
